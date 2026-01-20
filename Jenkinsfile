@@ -15,19 +15,13 @@ pipeline {
         stage('Plan') {
             steps {
                 echo "Generating Terraform plan"
-                sh 'terraform plan -out=tfplan'
-            }
-        }
-        stage('Manual Approval') {
-            steps {
-                input message: "Approve the Terraform apply?", ok: "Proceed"
+                sh 'terraform plan'
             }
         }
         stage('Apply') {
             steps {
                 echo "Applying Terraform plan"
-                #sh 'terraform apply tfplan'
-                sh 'terraform destroy'
+                sh 'terraform destroy --auto-approve'
             }
         }
     }
