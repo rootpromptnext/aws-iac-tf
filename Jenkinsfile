@@ -26,7 +26,8 @@ pipeline {
         stage('Apply') {
             steps {
                 echo "Applying Terraform plan"
-                sh 'terraform destroy tfplan'
+                sh 'terraform destroy'
+                //sh 'terraform destroy tfplan'
             }
         }
     }
