@@ -26,8 +26,18 @@ pipeline {
         stage('Apply') {
             steps {
                 echo "Applying Terraform plan"
-                sh 'terraform destroy'
-                //sh 'terraform destroy tfplan'
+                sh 'terraform apply tfplan'
+            }
+        }
+        stage('Manual Approval for Delete') {
+            steps {
+                input message: "Approve the Terraform delete?", ok: "Proceed"
+            }
+        }
+        stage('Delete') {
+            steps {
+                echo "Destroying Terraform-managed resources"
+                sh 'terraform destroy -auto-approve'
             }
         }
     }
